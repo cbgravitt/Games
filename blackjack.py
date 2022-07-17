@@ -7,6 +7,7 @@ house = []
 suits = ["hearts", "spades", "clubs", "diamonds"]
 values = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A']
 
+#Retrieves the sum of a given list of card tuples
 def sum(hand):
     sum = 0
     num_aces = 0
@@ -27,11 +28,13 @@ def sum(hand):
 def bust(hand):
     return sum(hand) > 21
 
+# Checks the various conditions by which the game could end.
 def gameOver():
     if bust(p1) or bust(house) or sum(house) == 21 or sum(p1) == 21:
         return True
     return False
 
+# The main gameplay loop for a game against the house
 def singleGame():
     deck = []
     move = 0
@@ -51,6 +54,7 @@ def singleGame():
         return
     print(f"Your current total is: {sum(p1)}")
 
+    #core gameplay loop of hit/stand
     while(1):
         i = int(input("\nDo you Hit (Press 1) or Stay (Press 0): "))
         if i==1 or i==0:
@@ -82,7 +86,9 @@ def singleGame():
                 print(f"The house is at {sum(house)}")
                 curr += 1
         
+        #sleep added for better gameplay flow
         sleep(.5)
+        #checking various win conditions to print proper end-of-game message
         if sum(p1) > sum(house):
             print(f"Your total is {sum(p1)}, which is higher. You win!")
             break
@@ -94,9 +100,6 @@ def singleGame():
             break
     return
 
-def twoPlayerGame():
-    return
-
 def main():
     print("Welcome to BlackJack!")
     playAgain = 1
@@ -104,17 +107,13 @@ def main():
         global p1, p2, house
         p1, p2, house = [], [], []
         while(1):
-            i = int(input("\nPress 1 to play the house, or press 2 to play a friend: "))
-            if i==1 or i==2:
+            i = int(input("\nPress 1 to play!"))
+            if i==1:
+                singleGame()
                 break
             else:
                 print("Enter a valid number....\n")
-
-        if i == 1:
-            singleGame()
-        else:
-            twoPlayerGame()
-        
+        # Gives a play again option after the game ends
         while(1):
             i = int(input("\nPress 1 to play again, or press 0 quit: "))
             if i==1 or i==0:
